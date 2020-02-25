@@ -9,6 +9,6 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
-    return Center(child:Text('hi'));
+    return Scaffold(body:Center(child:Text('hi')));
   }
 }
