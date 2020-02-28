@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Repository{
 
 
-   Future<dynamic> login() async{
+   static Future<dynamic> login() async{
     var response = await http.get(Api.GET_JWT);
     print(response.body+"\n\n");
     String jsonResponse = response.body.toString();
@@ -20,11 +20,14 @@ class Repository{
     return jsonResponse;
   }
 
-  Future<dynamic> securedResource() async{
+  static Future<dynamic> securedResource() async{
      Client client = HttpClientWithInterceptor.build(interceptors: [
        LoginInterceptor(),
      ]);
-     return client.get(Api.SECURED_RESOURCE);
+     var response =  await client.get(Api.SECURED_RESOURCE);
+     var jsonResponse = convert.jsonDecode(response.body);
+     return jsonResponse;
+
      //ok wait
 
   }
