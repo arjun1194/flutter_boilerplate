@@ -11,6 +11,6 @@ class Todo extends StatefulWidget {
 class _TodoState extends State<Todo> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body:Center(child: Text('todo'),));
+    return Scaffold(appBar:AppBar(title: Text('Todo Page'),),body:Center(child: Text('todo'),));
   }
 }
