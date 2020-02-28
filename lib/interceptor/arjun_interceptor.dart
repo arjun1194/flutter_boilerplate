@@ -7,7 +7,7 @@ class LoginInterceptor implements InterceptorContract {
   Future<RequestData> interceptRequest({RequestData data}) async {
     print(data);
     SharedPreferences sp = await  SharedPreferences.getInstance();
-    data.headers['Authorization']  = sp.getString(SharedPreferencesKeys.SP_AUTH);
+    data.headers['Auth']  = sp.getString(SharedPreferencesKeys.SP_AUTH);
     return data;
   }
 

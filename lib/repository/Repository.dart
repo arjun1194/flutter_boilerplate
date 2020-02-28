@@ -12,22 +12,20 @@ class Repository{
 
 
    Future<dynamic> login() async{
-     print(Api.GET_JWT);
     var response = await http.get(Api.GET_JWT);
-    print(response.toString());
-    var jsonResponse = convert.jsonDecode(response.body);
-    print(jsonResponse.toString());
+    print(response.body+"\n\n");
+    String jsonResponse = response.body.toString();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(SharedPreferencesKeys.SP_AUTH, jsonResponse);
     return jsonResponse;
   }
 
   Future<dynamic> securedResource() async{
-     print('some secured resource');
      Client client = HttpClientWithInterceptor.build(interceptors: [
        LoginInterceptor(),
      ]);
-     client.get(Api.SECURED_RESOURCE);
+     return client.get(Api.SECURED_RESOURCE);
+     //ok wait
 
   }
 

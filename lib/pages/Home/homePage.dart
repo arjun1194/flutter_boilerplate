@@ -20,21 +20,21 @@ class _MyHomeState extends State<MyHome> {
   getJwtFromSP(){
     SharedPreferences.getInstance().then((sp){
       setState(() {
-        jwt = sp.getString(SharedPreferencesKeys.SP_AUTH);;
+        jwt = sp.getString(SharedPreferencesKeys.SP_AUTH);
+        print(jwt);
       });
     });
   }
 
-  saveAuth(context) {
-    print('clicked!');
-    String snackbarString = 'Data Saved in Shared Preferences';
+  saveAuth() {
+
+
     Repository().login().then((jsonVal) {
       print(jsonVal.toString());
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(snackbarString),
-      ));
+      print('data recievedd');
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +50,14 @@ class _MyHomeState extends State<MyHome> {
               RaisedButton(
                 child: Text('GET JWT from API'),
                 onPressed: () {
-                  saveAuth(context);
+                  saveAuth();
                 },
               ),
               Text(jwt),
               RaisedButton(
                 child: Text('GET JWT from SP'),
                 onPressed: () {
-                  saveAuth(context);
+                  getJwtFromSP();
                 },
               )
             ],
@@ -65,3 +65,5 @@ class _MyHomeState extends State<MyHome> {
         ));
   }
 }
+
+
