@@ -25,8 +25,18 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_mobx: ^1.0.1
   source_gen:
+  build_runner:
+  json_annotation:
+
+  dio:
+  flutter_bloc:
+  shared_preferences:
+  connectivity:
+  firebase_messaging:
+  mobx_codegen:
 
 dev_dependencies:
+  json_serializable:
   flutter_test:
     sdk: flutter
 

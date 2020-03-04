@@ -1,14 +1,14 @@
-
 import 'package:mobx/mobx.dart';
-part  "SampleCounter.g.dart";
+part 'sample_counter.g.dart';
 
-//class Counter = SampleCounter with $_SampleCounter;
+class Counter = SampleCounter with _$Counter;
 
 abstract class SampleCounter with Store {
+
   @observable
   int value = 0;
 
-  @computed
+//  @getters
   int getValue() => value;
 
   @action
