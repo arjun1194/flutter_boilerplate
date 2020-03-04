@@ -1,6 +1,8 @@
 # flutter_boilerplate
 
-A new Flutter application.
+A Mobile appilication prototype. {State Mangement, Local DB, Social Auth, Cloud messaging, Payment,  Interceptor, RestClient, Websocket Client,..etc }
+
+Open for suggestions
 
 ## Getting Started
 
