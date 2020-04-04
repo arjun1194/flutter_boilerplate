@@ -7,29 +7,32 @@ import 'package:http/http.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class Repository {
+  static Future<dynamic> login() async {
+    try {
+      var response = await http.get(Api.GET_JWT);
+      print(response.body + "\n\n");
+      String jsonResponse = response.body.toString();
+      try {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(SharedPreferencesKeys.SP_AUTH, jsonResponse);
+        return jsonResponse;
+      } catch (e) {
+        return e;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
 
-class Repository{
-
-
-   static Future<dynamic> login() async{
-    var response = await http.get(Api.GET_JWT);
-    print(response.body+"\n\n");
-    String jsonResponse = response.body.toString();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(SharedPreferencesKeys.SP_AUTH, jsonResponse);
+  static Future<dynamic> securedResource() async {
+    Client client = HttpClientWithInterceptor.build(interceptors: [
+      LoginInterceptor(),
+    ]);
+    var response = await client.get(Api.SECURED_RESOURCE);
+    var jsonResponse = convert.jsonDecode(response.body);
     return jsonResponse;
+
+    //ok wait
   }
-
-  static Future<dynamic> securedResource() async{
-     Client client = HttpClientWithInterceptor.build(interceptors: [
-       LoginInterceptor(),
-     ]);
-     var response =  await client.get(Api.SECURED_RESOURCE);
-     var jsonResponse = convert.jsonDecode(response.body);
-     return jsonResponse;
-
-     //ok wait
-
-  }
-
 }

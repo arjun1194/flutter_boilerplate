@@ -12,32 +12,38 @@ class _MyHomeState extends State<MyHome> {
   String jwt;
 
   @override
-  initState(){
+  initState() {
     super.initState();
     jwt = '';
   }
 
-  getJwtFromSP(){
-    SharedPreferences.getInstance().then((sp){
+  getJwtFromSP() {
+    SharedPreferences.getInstance().then((sp) {
       setState(() {
         jwt = sp.getString(SharedPreferencesKeys.SP_AUTH);
-        if(jwt==null) jwt="Nothing found!";
+        if (jwt == null) jwt = "Nothing found!";
       });
+    }).catchError((err) {
+      setState(() {
+        jwt = err.toString();
+      });
+      return err;
     });
   }
 
-
-  securedApi(){
-    Repository.securedResource().then((val){
+  securedApi() {
+    Repository.securedResource().then((val) {
       setState(() {
         jwt = val.toString();
-        if(jwt==null) jwt="Nothing found!";
+        if (jwt == null) jwt = "Nothing found!";
       });
-
+    }).catchError((err) {
+      setState(() {
+        jwt = err.toString();
+      });
+      return err;
     });
   }
-
-
 
   saveAuth() {
     Repository.login().then((jsonVal) {
@@ -46,18 +52,27 @@ class _MyHomeState extends State<MyHome> {
       setState(() {
         jwt = "Got the value from server!";
       });
+    }).catchError((err) {
+      setState(() {
+        jwt = err.toString();
+      });
+      return err;
     });
   }
 
-  deleteSP(){
-    SharedPreferences.getInstance().then((sp){
+  deleteSP() {
+    SharedPreferences.getInstance().then((sp) {
       setState(() {
         sp.remove(SharedPreferencesKeys.SP_AUTH);
         jwt = "Deleted! Shared Preferences";
       });
+    }).catchError((err) {
+      setState(() {
+        jwt = err.toString();
+      });
+      return err;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +98,20 @@ class _MyHomeState extends State<MyHome> {
                   getJwtFromSP();
                 },
               ),
-              RaisedButton(child:Text('Fetch API with interceptor'),onPressed: (){
-                securedApi();
-              },),
-              RaisedButton(child:Text('Delete Shared Preferences'),onPressed: (){
-                deleteSP();
-              },),
-
+              RaisedButton(
+                child: Text('Fetch API with interceptor'),
+                onPressed: () {
+                  securedApi();
+                },
+              ),
+              RaisedButton(
+                child: Text('Delete Shared Preferences'),
+                onPressed: () {
+                  deleteSP();
+                },
+              ),
             ],
           ),
         ));
   }
 }
-
-
